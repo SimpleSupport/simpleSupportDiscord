@@ -7,6 +7,7 @@ const {
 } = require('discord-api-types/v9');
 const config = require('../config.js')
 const db = require('../database/database')
+const errorHandling = require('../models/errorLog')
 const fs = require('fs')
 const {
     Client,
@@ -49,7 +50,7 @@ module.exports = {
                     body: commands
                 });
                 console.log('----------------------'.gray.bold);
-                console.log('Commands: '.green.bold + 'Successfully Registered'.green)
+                console.log('Commands: '.green.bold + 'Successfully registered'.green)
                 console.log('----------------------'.gray.bold);
             } catch (err) {
                 if (err) console.error(err);
@@ -63,6 +64,8 @@ module.exports = {
                 console.log('----------------------'.gray.bold);
                 //ticketModel.init(db);
                 //ticketModel.sync();
+                errorHandling.init(db);
+                errorHandling.sync();
             }).catch(err => console.log(err));
 
     }
