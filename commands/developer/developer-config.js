@@ -21,23 +21,16 @@ module.exports = {
 
         const modal = new Modal()
             .setCustomId(`developerConfiguration-${interaction.user.id}`)
-            .setLabel('⚙️ BOT CONFIG')
-            .addComponents(
-                new TextInputComponent() // We create a Text Input Component
-                .setCustomId('errorlog-channel')
-                .setLabel(`Error Logging Channel ID`)
-                .setStyle('LONG') //IMPORTANT: Text Input Component Style can be 'SHORT' or 'LONG'
-                .setMaxLength(1000)
-                .setPlaceholder(`1234567890`)
-                .setRequired(false), // If it's required or not
-                new TextInputComponent() // We create a Text Input Component
-                .setCustomId('botactivity-array')
-                .setLabel(`Bot Playing - Array`)
-                .setStyle('LONG') //IMPORTANT: Text Input Component Style can be 'SHORT' or 'LONG'
-                .setMaxLength(1000)
-                .setPlaceholder(`test, test1, test2`)
-                .setRequired(false), // If it's required or not
-            )
+            .setTitle('⚙️ Bot Configuration');
+            const errorLogChannel = new TextInputComponent()
+			.setCustomId('errorLogChannel')
+			.setLabel("Error Logging Channel")
+            .setPlaceholder('1234567890')
+			.setStyle('SHORT');
+            const actionrow1 = new MessageActionRow().addComponents(errorLogChannel);
+            modal.addComponents(actionrow1);
+
+
 
         await interaction.showModal(modal);
     }
