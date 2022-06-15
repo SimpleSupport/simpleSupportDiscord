@@ -44,7 +44,7 @@ module.exports = {
 					.setStyle('SECONDARY'),
 			);
 
-            let msg = await interaction.reply({embeds: [embed], components: [row]});
+            let msg = await interaction.reply({embeds: [embed], components: [row], fetchReply: true});
 
             const filter = i => i.customId === 'resolve-error' && i.user.id === interaction.member.id && i.message.id === msg.id;
 
@@ -54,7 +54,6 @@ module.exports = {
             });
 
             collector.on('collect', async i => {
-                console.log(i);
                 if (i.customId === 'resolve-error') {
                     await embed.setColor('GREEN')
                     await embed.setTitle('**Error Resolved!**')

@@ -58,14 +58,23 @@ module.exports = {
         })();
 
         db.authenticate()
-            .then(() => {
+            .then(async () => {
                 console.log('----------------------'.gray.bold);
                 console.log('Database: '.green.bold + 'Successfully authenticated!'.green)
                 console.log('----------------------'.gray.bold);
                 //ticketModel.init(db);
                 //ticketModel.sync();
-                errorHandling.init(db);
-                errorHandling.sync();
+
+                const files = fs //EVENT HANDLER
+                    .readdirSync("./models")
+                    .filter(file => file.endsWith('.js'))
+
+                for (const file of files) {
+                    const temp = await require(`../models/${file}`)
+                    temp.init(db);
+                    temp.sync();
+                }
+
             }).catch(err => console.log(err));
 
     }
