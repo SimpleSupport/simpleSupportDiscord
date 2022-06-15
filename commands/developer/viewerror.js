@@ -9,7 +9,7 @@ module.exports = {
     category: "developers",
     data: new SlashCommandBuilder()
         .setName('show-error')
-        .setDescription(`Replies with an embed including bot's latency data.`)
+        .setDescription(`Displays error details of the error supplied.`)
         .addStringOption(option => option.setName('error-id').setDescription('The UUID of the error to view.')),
     async execute(interaction, client) {
         if(!interaction.member.id === "351189462891626496") {
@@ -39,14 +39,14 @@ module.exports = {
             const row = new MessageActionRow()
 			.addComponents(
 				new MessageButton()
-					.setCustomId('resolve-error')
+					.setCustomId(`resolve-error`)
 					.setLabel('📨 Resolve')
 					.setStyle('SECONDARY'),
 			);
 
             let msg = interaction.reply({embeds: [embed], components: [row]});
 
-            const filter = i => i.customId === 'resolve-error' && i.user.id === interaction.member.id;
+            const filter = i => i.customId === 'resolve-error' && i.user.id === interaction.member.id && i.message.id == msg.id;
 
             const collector = interaction.channel.createMessageComponentCollector({
                 filter,
